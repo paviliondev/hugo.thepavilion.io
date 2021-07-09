@@ -1,0 +1,44 @@
+<script>
+  (function() {
+    /* 
+      This code assumes the rstudio-rss-polling plugin is installed on the discourse 
+      instance at the discourseUrl (below), and the discourse site setting 
+      rss_polling_embed_info_allowed_origins on that instance includes the apex 
+      domain of the site this partial is included in, e.g. adding rstudio.com 
+      will work for all *.rstudio.com sites.
+    */
+
+    let discourseUrl = "http://staging.community.rstudio.com";
+    let postUrl = window.location.href.replace(/\/+$/, "");
+    let params = new URLSearchParams({ embed_url: postUrl });
+    let url = discourseUrl + "/embed/info?" + params.toString();
+    let request = new XMLHttpRequest();
+
+    request.onreadystatechange = function() { 
+      if (request.readyState == 4 && request.status == 200 && request.responseText) {
+        let embedInfo;
+
+        try {
+          embedInfo = JSON.parse(request.responseText);
+        } catch(e) {
+          // do nothing if unable to parse the response
+        }
+        
+        if (embedInfo && embedInfo.topic_slug) {
+          let discourseLinkHref = discourseUrl + "/t/" + embedInfo.topic_slug + "/" + embedInfo.topic_id;
+          let discourseLink = document.getElementById("discourse-link");
+
+          discourseLink.setAttribute("href", discourseLinkHref);
+          discourseLink.setAttribute("style", "visibility: visible;");
+        }
+      }    
+    }
+
+    request.open( "GET", url, true );            
+    request.send( null );
+  })()
+</script>
+
+<div class="discourse-link-container">
+  <a id="discourse-link" href="" style="visibility: hidden;">Comment on our forum</a>
+</div>

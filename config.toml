@@ -1,0 +1,13 @@
+baseURL = "http://example.org/"
+languageCode = "en-us"
+title = "Hugo - Pavilion"
+theme = "ananke"
+
+[server]
+
+  [[server.headers]]
+    for = "/**"
+
+    [server.headers.values]
+      Content-Security-Policy = "script-src localhost:1313 'unsafe-inline'"
+      Access-Control-Allow-Origin = "*"

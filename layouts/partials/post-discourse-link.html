@@ -8,7 +8,7 @@
       will work for all *.rstudio.com sites.
     */
 
-    let discourseUrl = "http://staging.community.rstudio.com";
+    let discourseUrl = "https://staging.community.rstudio.com";
     let postUrl = window.location.href.replace(/\/+$/, "");
     let params = new URLSearchParams({ embed_url: postUrl });
     let url = discourseUrl + "/embed/info?" + params.toString();

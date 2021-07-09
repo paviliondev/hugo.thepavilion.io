@@ -2,6 +2,7 @@ baseURL = "https://hugo.thepavilion.io/"
 languageCode = "en-us"
 title = "Hugo - Pavilion"
 theme = "ananke"
+publishDir = "docs"
 
 [server]
 
